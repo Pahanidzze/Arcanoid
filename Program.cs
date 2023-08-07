@@ -19,10 +19,11 @@ namespace Arcanoid
             window = new RenderWindow(new VideoMode(800, 600), "Arcanoid");
             window.SetFramerateLimit(60);
             window.Closed += Window_Closed;
-            int difficulty = 0;
-            for (Menu.OpenMenu(window, ref difficulty); window.IsOpen && difficulty != -1; Menu.OpenMenu(window, ref difficulty))
+            int mode = 0;
+            for (Menu.OpenMenu(window, ref mode); window.IsOpen && mode != -1; Menu.OpenMenu(window, ref mode))
             {
-                difficulty = 0;
+                Game.OpenGame(window, mode);
+                mode = 0;
             }
         }
 
