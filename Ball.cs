@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -58,22 +53,22 @@ namespace Arcanoid
             {
                 if (!wallStacked)
                 {
-                    Console.Write($"[LEFT WALL] : last direction: {direction}, ");
+                    // Console.Write($"[LEFT WALL] : last direction: {direction}, ");
                     direction = ((float)Math.PI - direction) % (2 * (float)Math.PI);
                     if (direction < 0) direction += 2 * (float)Math.PI;
                     wallStacked = true;
-                    Console.WriteLine($"new direction: {direction}, X: {position.X}, Y: {position.Y}");
+                    // Console.WriteLine($"new direction: {direction}, X: {position.X}, Y: {position.Y}");
                 }
             }
             else if (position.X + size.X >= window.Size.X)
             {
                 if (!wallStacked)
                 {
-                    Console.Write($"[RIGHT WALL] : last direction: {direction}, ");
+                    // Console.Write($"[RIGHT WALL] : last direction: {direction}, ");
                     direction = ((float)Math.PI - direction) % (2 * (float)Math.PI);
                     if (direction < 0) direction += 2 * (float)Math.PI;
                     wallStacked = true;
-                    Console.WriteLine($"new direction: {direction}, X: {position.X}, Y: {position.Y}");
+                    // Console.WriteLine($"new direction: {direction}, X: {position.X}, Y: {position.Y}");
                 }
             }
             else if (position.Y <= 0)
@@ -104,11 +99,11 @@ namespace Arcanoid
                 {
                     if (!wallStacked)
                     {
-                        Console.Write($"[BLOCK] : last direction: {direction}, ");
+                        // Console.Write($"[BLOCK] : last direction: {direction}, ");
                         direction = -direction % (2 * (float)Math.PI) + 2 * (float)Math.PI;
                         blocks[i].HP--;
-                        Console.WriteLine($"Change direction: {direction}");
-                        Console.WriteLine($"new direction: {direction}, X: {position.X}, Y: {position.Y}");
+                        // Console.WriteLine($"Change direction: {direction}");
+                        // Console.WriteLine($"new direction: {direction}, X: {position.X}, Y: {position.Y}");
                     }
                 }
             }
@@ -118,7 +113,7 @@ namespace Arcanoid
             {
                 if (!racketStacked)
                 {
-                    Console.Write($"[RACKET] : last direction: {direction / ((float)Math.PI / 6)} PI/6, ");
+                    // Console.Write($"[RACKET] : last direction: {direction / ((float)Math.PI / 6)} PI/6, ");
                     float layout = (position.X + size.X / 2 - racket.position.X) / (racket.size.X / 4f);
                     direction = (8 - direction / ((float)Math.PI / 6) + layout * 2) * (float)Math.PI / 6;
                     if (direction < 7 * (float)Math.PI / 6)
@@ -130,8 +125,8 @@ namespace Arcanoid
                         direction = 11 * (float)Math.PI / 6;
                     }
                     racketStacked = true;
-                    Console.WriteLine($"new direction: {direction / ((float)Math.PI / 6)} PI/6, X: {position.X}, Y: {position.Y}");
-                    Console.WriteLine($"LAYOUT: {layout}");
+                    // Console.WriteLine($"new direction: {direction / ((float)Math.PI / 6)} PI/6, X: {position.X}, Y: {position.Y}");
+                    // Console.WriteLine($"LAYOUT: {layout}");
                 }
             }
             else if (racketStacked)

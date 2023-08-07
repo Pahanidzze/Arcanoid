@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -37,8 +32,10 @@ namespace Arcanoid
         {
             window = win;
             int active = 1;
-            Block[] blocks = new Block[0];
+            Block[] blocks;
             if (mode == 1) blocks = InitEasyLevel();
+            else if (mode == 2) blocks = InitNormalLevel();
+            else blocks = InitHardLevel();
             Racket racket = InitRacket();
             ball = new Ball(new Vector2i(racket.position.X + racket.size.X / 2, racket.position.Y - 50), 4 * mode, 7 * (float)Math.PI / 4);
             int attemptes = 3;
@@ -81,6 +78,57 @@ namespace Arcanoid
                 blocks[i].size = blockSize;
                 blocks[i].position = new Vector2i(offsetX + (blockSize.X + offsetX) * (i % row), offsetY + (blockSize.Y + offsetY) * (i / row));
                 blocks[i].HP = 1;
+                blocks[i].lightBlockSprite = new Sprite(blockTexture)
+                {
+                    Position = (Vector2f)blocks[i].position
+                };
+                blocks[i].hardBlockSprite = new Sprite(hardBlockTexture)
+                {
+                    Position = (Vector2f)blocks[i].position
+                };
+            }
+            return blocks;
+        }
+
+        private static Block[] InitNormalLevel()
+        {
+            int row = 10;
+            Vector2i blockSize = new Vector2i(50, 15);
+            int offsetX = ((int)window.Size.X - (blockSize.X * row)) / (row + 1);
+            int offsetY = (int)(offsetX / 1.8f);
+            Block[] blocks = new Block[row * row];
+            for (int i = 0; i < row * row; i++)
+            {
+                blocks[i].size = blockSize;
+                blocks[i].position = new Vector2i(offsetX + (blockSize.X + offsetX) * (i % row), offsetY + (blockSize.Y + offsetY) * (i / row));
+                if (i > 10 * 6) blocks[i].HP = 2;
+                else blocks[i].HP = 1;
+                blocks[i].lightBlockSprite = new Sprite(blockTexture)
+                {
+                    Position = (Vector2f)blocks[i].position
+                };
+                blocks[i].hardBlockSprite = new Sprite(hardBlockTexture)
+                {
+                    Position = (Vector2f)blocks[i].position
+                };
+            }
+            return blocks;
+        }
+
+        private static Block[] InitHardLevel()
+        {
+            int row = 11;
+            Vector2i blockSize = new Vector2i(50, 15);
+            int offsetX = ((int)window.Size.X - (blockSize.X * row)) / (row + 1);
+            int offsetY = (int)(offsetX / 1.8f);
+            Block[] blocks = new Block[row * row];
+            for (int i = 0; i < row * row; i++)
+            {
+                blocks[i].size = blockSize;
+                blocks[i].position = new Vector2i(offsetX + (blockSize.X + offsetX) * (i % row), offsetY + (blockSize.Y + offsetY) * (i / row));
+                if ((i % 11 + 1) % 6 == 0) blocks[i].HP = 1;
+                else if (i / 11 == 0) blocks[i].HP = 1;
+                else blocks[i].HP = 2;
                 blocks[i].lightBlockSprite = new Sprite(blockTexture)
                 {
                     Position = (Vector2f)blocks[i].position
